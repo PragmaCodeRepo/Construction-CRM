@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SiteLedger | POC & Feature Guide</title>
+  <style>
+    :root{--navy:#17333e;--navy2:#244b54;--teal:#147f75;--teal-soft:#eaf5f2;--ink:#273f47;--muted:#6c8187;--line:#dce6e6;--paper:#fff;--canvas:#f2f6f5;--amber:#a87525;--amber-soft:#fff5e5;--red:#b64f45}
+    *{box-sizing:border-box}
+    @page{size:A4;margin:0}
+    body{margin:0;background:#e8eeee;color:var(--ink);font-family:"Segoe UI",Arial,sans-serif;font-size:10pt;line-height:1.48}
+    .page{width:210mm;height:297mm;margin:12mm auto;background:var(--paper);position:relative;padding:19mm 20mm 18mm;overflow:hidden;page-break-after:always}
+    .page:last-child{page-break-after:auto}
+    .cover{padding:0;background:var(--navy);color:#fff}
+    .cover-top{height:11mm;border-bottom:1px solid #ffffff22;margin:0 19mm;display:flex;align-items:center;justify-content:space-between;color:#b9d0d1;font-size:8pt;letter-spacing:1.3px;text-transform:uppercase}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.3px;color:#fff;text-transform:none;font-size:13pt}
+    .brand-mark{width:29px;height:29px;border-radius:8px;background:#1b9a8d;display:grid;place-items:center;font-size:15pt}
+    .cover-content{padding:30mm 21mm 0}
+    .kicker{color:#83d0c0;font-size:8pt;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+    h1{font-size:37pt;letter-spacing:-1.4px;line-height:1.08;margin:12mm 0 6mm;max-width:150mm}
+    .cover .subtitle{font-size:16pt;color:#c8d9dc;font-weight:400;max-width:140mm;line-height:1.4}
+    .cover-copy{font-size:11pt;color:#b9cbcf;max-width:138mm;margin-top:11mm;line-height:1.7}
+    .cover-rule{width:35mm;height:2px;background:#36b5a6;margin:15mm 0 13mm}
+    .cover-stats{display:flex;gap:9mm;margin-top:15mm}
+    .cover-stat{min-width:38mm;border-left:2px solid #39ad9f;padding-left:4mm}
+    .cover-stat b{font-size:19pt;display:block;color:#fff}
+    .cover-stat span{display:block;color:#a9c2c6;font-size:8pt;margin-top:1mm}
+    .cover-bottom{position:absolute;bottom:17mm;left:21mm;right:21mm;display:flex;justify-content:space-between;align-items:end;border-top:1px solid #ffffff25;padding-top:5mm;color:#a9c0c4;font-size:8pt}
+    .cover-bottom strong{color:#d9e5e7}
+    .cover-graphic{position:absolute;right:-13mm;bottom:34mm;width:83mm;height:83mm;border:1px solid #ffffff20;border-radius:50%}
+    .cover-graphic:before,.cover-graphic:after{content:"";position:absolute;border:1px solid #ffffff18;border-radius:50%}
+    .cover-graphic:before{inset:12mm}.cover-graphic:after{inset:25mm;background:#138c8140}
+    .cover-graphic i{position:absolute;width:8mm;height:8mm;border-radius:50%;background:#5cd0bd;left:16mm;top:13mm;box-shadow:0 0 0 7mm #42b7a323}
+    .page-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:4mm;margin-bottom:9mm}
+    .page-brand{display:flex;align-items:center;gap:7px;color:var(--navy);font-size:10pt;font-weight:700}
+    .page-brand-mark{width:20px;height:20px;display:grid;place-items:center;background:var(--teal);color:#fff;border-radius:5px;font-size:10pt}
+    .page-label{font-size:7.5pt;color:#819499;font-weight:700;letter-spacing:1.2px;text-transform:uppercase}
+    .eyebrow{font-size:8pt;font-weight:700;color:var(--teal);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:2.5mm}
+    h2{font-size:24pt;line-height:1.17;letter-spacing:-.7px;color:var(--navy);margin:0 0 3mm}
+    .intro{font-size:10.5pt;color:var(--muted);max-width:160mm;margin-bottom:7mm}
+    h3{font-size:12pt;color:var(--navy);margin:0 0 2mm}
+    h4{font-size:9.5pt;color:var(--navy);margin:0 0 1.5mm}
+    p{margin:0 0 3mm}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:4mm}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:3mm}
+    .card{border:1px solid var(--line);border-radius:7px;padding:4mm 4.5mm;background:#fff}
+    .card p,.card li{font-size:8.7pt;color:#637a80;line-height:1.48}
+    .card p:last-child{margin-bottom:0}
+    .card ul{margin:2mm 0 0;padding-left:4mm}
+    .icon{width:8mm;height:8mm;border-radius:5px;display:grid;place-items:center;color:var(--teal);background:var(--teal-soft);font-size:11pt;font-weight:700;margin-bottom:2.5mm}
+    .callout{border-left:3px solid var(--teal);background:#eff7f5;border-radius:0 6px 6px 0;padding:4mm 5mm;margin:5mm 0}
+    .callout b{font-size:9.5pt;color:var(--navy)}
+    .callout p{font-size:8.8pt;color:#5c747a;margin:1mm 0 0}
+    .warning{border-left-color:#d49a3b;background:var(--amber-soft)}
+    .warning b{color:#6f592f}
+    .pill{display:inline-block;border-radius:14px;background:var(--teal-soft);color:#237d71;padding:1mm 2.5mm;font-size:7.5pt;font-weight:700}
+    .pill.amber{background:var(--amber-soft);color:#9b702d}
+    .pill.red{background:#fff0ed;color:var(--red)}
+    .module-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5mm}
+    .module{display:flex;gap:3mm;border:1px solid var(--line);border-radius:6px;padding:3mm}
+    .module-no{font-weight:700;color:var(--teal);font-size:9pt;min-width:7mm}
+    .module b{display:block;color:var(--navy);font-size:9pt;margin-bottom:1mm}
+    .module span{display:block;color:var(--muted);font-size:7.8pt;line-height:1.4}
+    .flow{display:flex;align-items:stretch;gap:2mm;margin:4mm 0}
+    .flow-step{flex:1;background:#f2f7f6;border:1px solid #dfebea;border-radius:5px;padding:3mm;text-align:center;font-size:7.8pt;color:#466168}
+    .flow-step b{display:block;color:var(--navy);font-size:8.5pt;margin-bottom:1mm}
+    .flow-arrow{align-self:center;color:#6da99e;font-size:12pt;font-weight:700}
+    .metric-row{display:grid;grid-template-columns:repeat(3,1fr);gap:3mm;margin:4mm 0}
+    .metric{background:var(--navy);border-radius:6px;padding:3.5mm;color:#fff}
+    .metric b{display:block;font-size:14pt;line-height:1.1}
+    .metric span{display:block;font-size:7.5pt;color:#bdd0d2;margin-top:1.5mm}
+    .table{width:100%;border-collapse:collapse;margin:3mm 0}
+    .table th{text-align:left;font-size:7.5pt;letter-spacing:.5px;color:#758a8f;background:#f1f5f4;padding:2.5mm}
+    .table td{vertical-align:top;border-bottom:1px solid #e8eeee;padding:2.5mm;font-size:8pt;color:#526a70}
+    .table td:first-child{color:var(--navy);font-weight:700;width:31%}
+    .footer{position:absolute;bottom:8mm;left:20mm;right:20mm;border-top:1px solid var(--line);padding-top:2.5mm;display:flex;justify-content:space-between;color:#90a0a4;font-size:7pt}
+    .small{font-size:8pt;color:var(--muted)}
+    .check{color:var(--teal);font-weight:700}
+    .limitation-list{display:grid;grid-template-columns:1fr 1fr;gap:2mm 5mm;list-style:none;padding:0;margin:2mm 0}
+    .limitation-list li{font-size:8.3pt;color:#60777d;padding-left:5mm;position:relative}
+    .limitation-list li:before{content:"—";position:absolute;left:0;color:#c17942;font-weight:700}
+    .next-step{display:flex;gap:3mm;padding:2.5mm 0;border-bottom:1px solid #edf1f1}
+    .next-step:last-child{border-bottom:0}
+    .step-num{width:6mm;height:6mm;border-radius:50%;background:#e8f4f1;color:#197c71;display:grid;place-items:center;font-size:7.5pt;font-weight:700;flex:0 0 auto}
+    .next-step b{display:block;font-size:8.5pt;color:var(--navy)}
+    .next-step span{display:block;font-size:7.8pt;color:var(--muted);margin-top:.5mm}
+    .end-mark{text-align:center;margin-top:8mm;color:#8a9b9f;font-size:8pt;letter-spacing:1.2px}
+    @media print{body{background:#fff}.page{margin:0;box-shadow:none}}
+  </style>
+</head>
+<body>
+  <section class="page cover">
+    <div class="cover-top"><div class="brand"><span class="brand-mark">⌂</span> siteledger</div><span>Product overview · 2026</span></div>
+    <div class="cover-content">
+      <div class="kicker">Construction operations & customer management</div>
+      <h1>One clear view<br>of every job.</h1>
+      <div class="subtitle">SiteLedger POC<br>Product & feature guide</div>
+      <p class="cover-copy">A browser-based proof of concept that brings sales opportunities, customers, project delivery, commercial decisions, sample finance and customer communications into one connected workspace.</p>
+      <div class="cover-rule"></div>
+      <span class="pill">FRONTEND-ONLY DEMONSTRATION</span>
+      <div class="cover-stats">
+        <div class="cover-stat"><b>11</b><span>Product workspaces</span></div>
+        <div class="cover-stat"><b>100%</b><span>Fictional demo records</span></div>
+        <div class="cover-stat"><b>0</b><span>External connections</span></div>
+      </div>
+    </div>
+    <div class="cover-graphic"><i></i></div>
+    <div class="cover-bottom"><span><strong>Prepared for:</strong> SiteLedger POC stakeholders</span><span>Feature guide · Version 1.0</span></div>
+  </section>
+
+  <section class="page">
+    <div class="page-head"><div class="page-brand"><span class="page-brand-mark">⌂</span> siteledger</div><span class="page-label">01 · Purpose & product map</span></div>
+    <div class="eyebrow">THE POC AT A GLANCE</div>
+    <h2>Built around the way construction work moves.</h2>
+    <p class="intro">SiteLedger demonstrates how a construction company could follow a customer relationship from its first enquiry through estimating, project delivery, payment and handover—without switching between disconnected views.</p>
+    <div class="metric-row">
+      <div class="metric"><b>12</b><span>Seeded leads across all sales stages</span></div>
+      <div class="metric"><b>10</b><span>Interconnected customer projects</span></div>
+      <div class="metric"><b>3</b><span>Proposed integrations, all disconnected</span></div>
+    </div>
+    <div class="grid-2">
+      <div class="card"><div class="icon">◈</div><h3>Business visibility</h3><p>An owner can scan active work, delivery risks, open pipeline, follow-ups and receivables on one executive dashboard. KPI values are calculated from shared records rather than separately hard-coded totals.</p></div>
+      <div class="card"><div class="icon">↗</div><h3>Connected records</h3><p>Stable IDs link leads, customers, projects, tasks, quotes, variations, invoices, email conversations, calendar events and activity. Related records can be followed across modules.</p></div>
+    </div>
+    <h3 style="margin-top:7mm">Workspace map</h3>
+    <div class="module-grid">
+      <div class="module"><div class="module-no">01</div><div><b>Overview</b><span>Business KPIs, charts, attention list, schedule, receivables and activity.</span></div></div>
+      <div class="module"><div class="module-no">02</div><div><b>Leads & CRM</b><span>Opportunity pipeline, follow-ups, ownership and lead conversion.</span></div></div>
+      <div class="module"><div class="module-no">03</div><div><b>Customers</b><span>Contacts, linked work, sample balances, notes and interactions.</span></div></div>
+      <div class="module"><div class="module-no">04</div><div><b>Projects</b><span>Register and project workspace for progress, risk, schedule and commercials.</span></div></div>
+      <div class="module"><div class="module-no">05</div><div><b>Schedule & tasks</b><span>Agenda/week views, task ownership, priority, due dates and status.</span></div></div>
+      <div class="module"><div class="module-no">06</div><div><b>Quotes & variations</b><span>Quote status and variation approvals with contract-value recalculation.</span></div></div>
+      <div class="module"><div class="module-no">07</div><div><b>Finance</b><span>Sample receivables, bills, ageing, outstanding balances and payment demo.</span></div></div>
+      <div class="module"><div class="module-no">08</div><div><b>Communications</b><span>Outlook-style inbox, follow-up flags, calendar agenda and local drafts.</span></div></div>
+      <div class="module"><div class="module-no">09</div><div><b>Reports</b><span>Pipeline, project, task and illustrative financial charts; CSV export.</span></div></div>
+      <div class="module"><div class="module-no">10–11</div><div><b>Integrations & settings</b><span>Disconnected provider cards, simulated sync history, preferences and reset.</span></div></div>
+    </div>
+    <div class="footer"><span>SITELEDGER · PRODUCT & FEATURE GUIDE</span><span>Illustrative frontend proof of concept</span><span>02</span></div>
+  </section>
+
+  <section class="page">
+    <div class="page-head"><div class="page-brand"><span class="page-brand-mark">⌂</span> siteledger</div><span class="page-label">02 · Sales & project delivery</span></div>
+    <div class="eyebrow">CUSTOMER TO CONSTRUCTION JOB</div>
+    <h2>Keep the hand-offs visible.</h2>
+    <p class="intro">CRM and project screens demonstrate the path from enquiry to a live job while retaining the customer, commercial and operational context around each record.</p>
+    <h3>Lead-to-project conversion</h3>
+    <div class="flow">
+      <div class="flow-step"><b>1 · Qualify</b>Confirm contact, email and opportunity value.</div><div class="flow-arrow">›</div>
+      <div class="flow-step"><b>2 · Convert</b>Reuse or create a customer record.</div><div class="flow-arrow">›</div>
+      <div class="flow-step"><b>3 · Create job</b>Generate a linked planning project.</div><div class="flow-arrow">›</div>
+      <div class="flow-step"><b>4 · Record outcome</b>Mark lead won and log activity.</div>
+    </div>
+    <div class="grid-2">
+      <div class="card"><h3>Leads & CRM</h3><ul><li>Search and filter by stage, owner, source and follow-up timing.</li><li>Create and edit leads; inspect contact, notes and activity in a detail drawer.</li><li>Convert qualified or won records to a customer/project workflow.</li><li>Prevent repeat conversion by retaining the created project link.</li></ul></div>
+      <div class="card"><h3>Customer directory</h3><ul><li>Search customer/company contacts and filter by relationship status.</li><li>See linked projects, open sample invoices and related email threads.</li><li>Edit the customer record, add local notes and link an existing project.</li><li>Navigate from customer context into project workspaces.</li></ul></div>
+    </div>
+    <h3 style="margin-top:6mm">Project workspace</h3>
+    <table class="table">
+      <thead><tr><th>Project tab</th><th>What it demonstrates</th></tr></thead>
+      <tbody>
+        <tr><td>Overview</td><td>Customer and site details, project manager, progress, key dates, health/risk, financial summary and upcoming milestones.</td></tr>
+        <tr><td>Schedule & Tasks</td><td>Linked tasks with owners, due dates, priorities and locally editable statuses.</td></tr>
+        <tr><td>Financials</td><td>Original and revised contract values, approved variations, budget, committed and actual costs, variance and open invoices.</td></tr>
+        <tr><td>Quotes & Variations</td><td>Project-linked commercial records and their current decision states.</td></tr>
+        <tr><td>Communications</td><td>Related mock email conversations and calendar events.</td></tr>
+        <tr><td>Documents & Activity</td><td>Mock document register metadata and a chronological project activity view.</td></tr>
+      </tbody>
+    </table>
+    <div class="callout"><b>Project stage and project health are separate fields.</b><p>Planning, Scheduled, In Progress, On Hold and Completed describe the delivery stage. On Track, At Risk and Delayed communicate health. This distinction supports clear operational reporting.</p></div>
+    <div class="footer"><span>SITELEDGER · PRODUCT & FEATURE GUIDE</span><span>Illustrative frontend proof of concept</span><span>03</span></div>
+  </section>
+
+  <section class="page">
+    <div class="page-head"><div class="page-brand"><span class="page-brand-mark">⌂</span> siteledger</div><span class="page-label">03 · Commercials & finance</span></div>
+    <div class="eyebrow">CONTROL THE COMMERCIAL DETAIL</div>
+    <h2>Make decisions and balances easy to follow.</h2>
+    <p class="intro">Quotes, variations, invoices and supplier bills share project/customer links and use reusable calculations so the same figure can be reviewed in multiple screens.</p>
+    <div class="grid-2">
+      <div class="card"><div class="icon">▤</div><h3>Quotes</h3><p>Track references, descriptions, customer/project, amount, created/sent/expiry dates, follow-up and status from draft through acceptance or decline. Update statuses locally and open quote details.</p></div>
+      <div class="card"><div class="icon">＋</div><h3>Variations</h3><p>Track requested value, schedule impact, request date and approval. Approved values are summed against the original contract. Changing a variation back to a non-approved state removes it from the revised total.</p></div>
+    </div>
+    <div class="callout"><b>Revised contract = original contract + approved variation amounts.</b><p>The application calculates the approved set from the source records, so each variation is counted once rather than repeatedly added when its status changes.</p></div>
+    <h3 style="margin-top:6mm">Finance workspace</h3>
+    <div class="grid-2">
+      <div class="card"><h4>Invoices</h4><p>Search and filter by status, project and customer. Review issue/due dates, amount, paid amount, outstanding balance and payment breakdown. A “mark paid” action updates only the local demo record.</p></div>
+      <div class="card"><h4>Supplier bills</h4><p>Switch to bills to review supplier, linked project, dates, amount paid, outstanding balance and status.</p></div>
+    </div>
+    <table class="table">
+      <thead><tr><th>Calculation</th><th>Rule used in the POC</th></tr></thead>
+      <tbody>
+        <tr><td>Open pipeline</td><td>Sum estimated lead values, excluding Won and Lost.</td></tr>
+        <tr><td>Outstanding balance</td><td>Maximum of zero and invoice amount less amount paid.</td></tr>
+        <tr><td>Overdue receivables</td><td>Invoice due date is before today and outstanding balance is greater than zero.</td></tr>
+        <tr><td>Invoice ageing</td><td>Current, 1–30, 31–60 and 61+ days overdue; fully paid invoices are excluded.</td></tr>
+        <tr><td>Budget variance</td><td>Actual cost minus budget. A positive value means actual cost exceeds budget.</td></tr>
+      </tbody>
+    </table>
+    <div class="callout warning"><b>Finance is illustrative—not accounting.</b><p>The Finance page identifies sample data and states Xero is not connected. No invoice is issued, no payment is processed, and no accounting record is changed externally.</p></div>
+    <div class="footer"><span>SITELEDGER · PRODUCT & FEATURE GUIDE</span><span>Illustrative frontend proof of concept</span><span>04</span></div>
+  </section>
+
+  <section class="page">
+    <div class="page-head"><div class="page-brand"><span class="page-brand-mark">⌂</span> siteledger</div><span class="page-label">04 · Communications, reports & integrations</span></div>
+    <div class="eyebrow">FROM DAILY WORK TO BUSINESS INSIGHT</div>
+    <h2>Bring the operational picture together.</h2>
+    <p class="intro">The remaining modules show how communications, reporting and future system connections could fit into the same workflow—while making the demo boundary explicit.</p>
+    <div class="grid-2">
+      <div class="card"><div class="icon">✉</div><h3>Communications</h3><ul><li>Search mock conversations and filter by customer, project, unread or follow-up.</li><li>Open message details, mark read/unread and flag/unflag for follow-up.</li><li>Review a calendar agenda of meetings, inspections and site events.</li><li>Compose and save a local draft; the UI confirms that it has not been sent.</li></ul></div>
+      <div class="card"><div class="icon">▥</div><h3>Reports & analytics</h3><ul><li>Lead count and pipeline value by stage; lead sources and sales outcomes.</li><li>Project status/health, task status and overdue milestones.</li><li>Sample receivables, ageing, bills and budget-versus-actual views.</li><li>Project/date filters recalculate selected charts; CSV export downloads current project data.</li></ul></div>
+    </div>
+    <h3 style="margin-top:6mm">Proposed integration touchpoints</h3>
+    <table class="table">
+      <thead><tr><th>Provider</th><th>Potential future data categories (subject to vendor capability)</th><th>POC status</th></tr></thead>
+      <tbody>
+        <tr><td>Buildxact</td><td>Construction projects, leads, estimates, scheduling, purchase orders and job-cost information.</td><td><span class="pill amber">DEMO MODE — NOT CONNECTED</span></td></tr>
+        <tr><td>Xero</td><td>Contacts, invoices, bills, payment information and selected accounting summaries.</td><td><span class="pill amber">DEMO MODE — NOT CONNECTED</span></td></tr>
+        <tr><td>Outlook</td><td>Email conversations, calendar events, customer communication history and follow-up workflows.</td><td><span class="pill amber">DEMO MODE — NOT CONNECTED</span></td></tr>
+      </tbody>
+    </table>
+    <div class="callout warning"><b>Simulate sync is deliberately local.</b><p>A click changes the displayed simulated-sync timestamp and adds a row to mock sync history, including the sample warning. It does not connect to a provider, fetch records, or change the disconnected state.</p></div>
+    <div class="grid-2">
+      <div class="card"><h3>Settings</h3><p>Configure company/user display names, currency and demo notification preference. Currency formatting is shared throughout the application. Reset restores the seed records while preserving workspace preferences.</p></div>
+      <div class="card"><h3>Global search</h3><p>Search leads, customers, projects, invoices and quotes from the top bar. Results show record type and a secondary description; selecting a result opens its module. Ctrl/⌘+K focuses search.</p></div>
+    </div>
+    <div class="footer"><span>SITELEDGER · PRODUCT & FEATURE GUIDE</span><span>Illustrative frontend proof of concept</span><span>05</span></div>
+  </section>
+
+  <section class="page">
+    <div class="page-head"><div class="page-brand"><span class="page-brand-mark">⌂</span> siteledger</div><span class="page-label">05 · Demo operation & next steps</span></div>
+    <div class="eyebrow">HOW TO EVALUATE THE DEMONSTRATION</div>
+    <h2>Explore safely. Learn what to build next.</h2>
+    <p class="intro">The POC is designed for stakeholder walkthroughs and workflow feedback. It demonstrates front-end behavior only and should not be used to manage live construction, customer or accounting data.</p>
+    <div class="grid-2">
+      <div class="card"><h3>Local data behavior</h3><p>Seed records initialize on first use. Changes persist in browser local storage for that browser/profile. Records are fictional. Reset restores seeded records, and invalid saved JSON falls back to fresh seed data.</p></div>
+      <div class="card"><h3>Run the application</h3><p>Install Node.js 18 or later, then run <b>npm install</b> and <b>npm run dev</b> from the project folder. Create a production build with <b>npm run build</b>.</p></div>
+    </div>
+    <h3 style="margin-top:6mm">Core workflows verified in the running UI</h3>
+    <div class="grid-2">
+      <div class="card">
+        <div class="next-step"><div class="step-num">✓</div><div><b>Lead conversion</b><span>Created a qualified lead, converted it to a customer/project and landed on its detail page.</span></div></div>
+        <div class="next-step"><div class="step-num">✓</div><div><b>Variation approval</b><span>Approved variation changed the project’s calculated revised contract value; resetting restored seed data.</span></div></div>
+        <div class="next-step"><div class="step-num">✓</div><div><b>Local payment simulation</b><span>Marked a sample invoice paid; balance/status and finance KPIs recalculated.</span></div></div>
+      </div>
+      <div class="card">
+        <div class="next-step"><div class="step-num">✓</div><div><b>Integration simulation</b><span>Added simulated sync history and kept the provider disconnected.</span></div></div>
+        <div class="next-step"><div class="step-num">✓</div><div><b>Report download</b><span>CSV export downloaded project report rows using browser-generated data.</span></div></div>
+        <div class="next-step"><div class="step-num">✓</div><div><b>Routes and responsive check</b><span>All listed routes rendered; dashboard was checked at a 390px viewport.</span></div></div>
+      </div>
+    </div>
+    <h3 style="margin-top:6mm">Scope boundaries</h3>
+    <ul class="limitation-list">
+      <li>No backend, API server or database.</li>
+      <li>No authentication or authorization.</li>
+      <li>No live Buildxact, Xero or Microsoft Graph connections.</li>
+      <li>No email sending, invoice issuing or payment processing.</li>
+      <li>No document upload/storage; register is metadata only.</li>
+      <li>No cross-device synchronization or shared users.</li>
+      <li>Financial, customer and operational records are fictional.</li>
+      <li>Light theme only; other selected theme values are preferences only.</li>
+    </ul>
+    <div class="callout"><b>Recommended next step: validate the workflow before integrating.</b><p>Use stakeholder sessions to confirm ownership, status definitions, approval rules, reporting needs and the authoritative system for each data domain.</p></div>
+    <div class="grid-3">
+      <div class="card"><h4>1 · Product discovery</h4><p>Confirm personas, permissions, field requirements and exception paths.</p></div>
+      <div class="card"><h4>2 · Data & security</h4><p>Design backend, audit, access control, privacy and retention before real data.</p></div>
+      <div class="card"><h4>3 · Integration design</h4><p>Validate vendor APIs, system-of-record ownership, reconciliation and failure handling.</p></div>
+    </div>
+    <div class="end-mark">SITELEDGER · CONSTRUCTION OPERATIONS & CUSTOMER MANAGEMENT</div>
+    <div class="footer"><span>SITELEDGER · PRODUCT & FEATURE GUIDE</span><span>Prepared 20 October 2026</span><span>06</span></div>
+  </section>
+</body>
+</html>
